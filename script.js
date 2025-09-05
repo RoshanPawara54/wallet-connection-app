@@ -9,9 +9,9 @@ connectButton.addEventListener("click", async () => {
   if (typeof window.ethereum !== "undefined") {
     try {
       // Request account access
-      await ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
 
-      // Connect ethers provider
+      // Create provider & signer
       provider = new ethers.providers.Web3Provider(window.ethereum);
       signer = provider.getSigner();
 
@@ -23,7 +23,7 @@ connectButton.addEventListener("click", async () => {
       const balanceInEth = ethers.utils.formatEther(balance);
       balanceText.innerText = `Balance: ${balanceInEth} ETH`;
     } catch (err) {
-      console.error(err);
+      console.error("Error details:", err);
       accountText.innerText = "Error connecting to wallet!";
     }
   } else {
